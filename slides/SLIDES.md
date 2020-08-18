@@ -36,7 +36,7 @@ Virtuelle Maschinen einfach in einer Datei definieren
 5. Fragerunde
 
 <br />
-Slides und Demo Material unter:
+Slides und Demo Material unter:  
 https://github.com/horvaro/VagrantDemo-NoEng2020
 
 ---

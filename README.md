@@ -19,3 +19,7 @@ Mounting folders from the host OS
 ## :open_file_folder: Demo4
 Vagrant Demo with a multi-machine setup  
 Creating a cluster or something similar
+
+## :open_file_folder: Demo5
+Windows Server 2019 Demo  
+`vagrant rdp` and `vagrant powershell` can be used to connect

@@ -1,0 +1,21 @@
+# Demo5
+# Create Windows Server 2019 Std VM with 1CPU and 3GB RAM
+# You can use 'vagrant rdp'
+
+Vagrant.configure("2") do |config|
+    config.vm.box = "gusztavvargadr/windows-server"
+
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+
+    config.vm.provider "virtualbox" do |vb|
+        vb.memory = "3072"
+        vb.cpus = 1
+    end
+
+    config.vm.provider "hyperv" do |hv|
+        hv.memory = 3072
+        hv.maxmemory = 3072
+        hv.cpus = 1
+    end
+
+end
