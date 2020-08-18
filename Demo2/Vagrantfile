@@ -1,0 +1,27 @@
+# Demo1
+# Create Ubuntu 18.04 VM with 1CPU and 3GB RAM
+# Update APT Packages and install nmap, speedtest-cli, maven, Java JDK
+# Load a sample project from github
+
+Vagrant.configure("2") do |config|
+    config.vm.box = "hashicorp/bionic64"
+
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+
+    config.vm.provider "virtualbox" do |vb|
+        vb.memory = "3072"
+        vb.cpus = 1
+    end
+
+    config.vm.provider "hyperv" do |hv|
+        hv.memory = 3072
+        hv.maxmemory = 3072
+        hv.cpus = 1
+    end
+
+    config.vm.provision "shell", inline: <<-SHELL
+        apt-get update
+        apt-get install -y nmap speedtest-cli maven git default-jdk
+        su - vagrant -c "git clone https://github.com/javaparser/javaparser-maven-sample.git"
+    SHELL
+end
