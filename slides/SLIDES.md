@@ -140,6 +140,8 @@ end
 
 ---
 # 4. Demo 2
+<!-- Befehle anschliessend ausprobieren -->
+<!-- nmap -Pn foobar,  speedtest-cli,  mvn clean install -->
 
 Startup Befehle (Installation von Software, Laden von Daten)
 
@@ -162,7 +164,11 @@ end
 
 ---
 # 4. Demo 3
-
+<!-- ACHTUNG: Unbedingt auf Virtualbox Provider wechseln -->
+<!-- Hyper-V: Keine Port-Forwards und keine Synced_Folders -->
+<!-- -> Jedoch mit Umweg möglich -->
+<!-- https://www.bookstack.cn/read/Vagrant/30c69332da128a2e.md#%C2%BB%20Common%20Issues -->
+<!-- https://quotidian-ennui.github.io/blog/2017/05/22/vagrant-hyper-v-sync-folders/ -->
 Zugänge einrichten (Shared Folder, Port-Weiterleitung)
 
 ```
@@ -178,17 +184,38 @@ end
 ```
 
 Port-Weiterleitung funktioniert in Hyper-V aktuell nicht.
-(Alternativ kann die interne IP der VM genutzt werden.)
+So wie auch das korrekte Einhängen von lokalen Ordnern.
 
 
 ---
 # 4. Demo 4
-```
-Vagrant.configure("2") do |config|
-    config.vm.box = "hashicorp/bionic64"
 
-    config.vm.provider "virtualbox" do |vb|
-        vb.memory = "3072"
+<!-- Vagrant up dauert lange -->
+<!-- Anschliessend 'vagrant ssh vm1' -->
+
+```
+$installer = <<SCRIPT
+    sudo yum install -y epel-release
+    sudo yum install -y nginx
+    sudo systemctl start nginx
+SCRIPT
+
+Vagrant.configure("2") do |config|
+    config.vm.provision "shell", inline: $installer
+
+    config.vm.define "vm1" do |vm1|
+        vm1.vm.box = "centos/7"
+        vm1.vm.hostname = "vm1.local"
+        vm1.vm.network "private_network", ip: "172.42.42.101"
+        vm1.vm.provider "virtualbox" do |vb|
+            [...]
+        end
+        config.vm.provision "shell", inline: <<-SHELL
+            yum install -y nmap
+        SHELL
+    end 
+
+    config.vm.define "vm2" do |vm2|
     [...]
 
 end

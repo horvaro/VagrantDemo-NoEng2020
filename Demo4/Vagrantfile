@@ -1,0 +1,62 @@
+# Demo4
+# Create 3 CentOS7 Machines which can reach eachother
+
+$installer = <<SCRIPT
+    sudo yum install -y epel-release
+    sudo yum install -y nginx
+    sudo systemctl start nginx
+SCRIPT
+
+Vagrant.configure("2") do |config|
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+
+    config.vm.provision "shell", inline: $installer
+
+    config.vm.define "vm1" do |vm1|
+        vm1.vm.box = "centos/7"
+        vm1.vm.hostname = "vm1.local"
+        vm1.vm.network "private_network", ip: "172.42.42.101"
+        vm1.vm.provider "virtualbox" do |vb|
+            vb.memory = "1024"
+            vb.cpus = 1
+        end
+        vm1.vm.provider "hyperv" do |hv|
+            hv.memory = 1024
+            hv.maxmemory = 1024
+            hv.cpus = 1
+        end
+        config.vm.provision "shell", inline: <<-SHELL
+            yum install -y nmap
+        SHELL
+    end 
+
+    config.vm.define "vm2" do |vm2|
+        vm2.vm.box = "centos/7"
+        vm2.vm.hostname = "vm2.local"
+        vm2.vm.network "private_network", ip: "172.42.42.102"
+        vm2.vm.provider "virtualbox" do |vb|
+            vb.memory = "1024"
+            vb.cpus = 1
+        end
+        vm2.vm.provider "hyperv" do |hv|
+            hv.memory = 1024
+            hv.maxmemory = 1024
+            hv.cpus = 1
+        end
+    end 
+
+    config.vm.define "vm3" do |vm3|
+        vm3.vm.box = "generic/centos8"
+        vm3.vm.hostname = "vm3.local"
+        vm3.vm.network "private_network", ip: "172.42.42.102"
+        vm3.vm.provider "virtualbox" do |vb|
+            vb.memory = "1024"
+            vb.cpus = 1
+        end
+        vm3.vm.provider "hyperv" do |hv|
+            hv.memory = 1024
+            hv.maxmemory = 1024
+            hv.cpus = 1
+        end
+    end 
+end
