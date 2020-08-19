@@ -22,13 +22,13 @@ Vagrant.configure("2") do |config|
     config.vm.network "forwarded_port", guest: 80, host: 8080
     config.vm.network "forwarded_port", guest: 8080, host: 9999, host_ip: "127.0.0.1"
 
-    config.vm.synced_folder "C:\\_temp", "/vagrant_data", type:"smb", mount_options: ["vers=2.1"]
+    config.vm.synced_folder "C:\\_temp", "/vagrant_data"
 
     config.vm.provision "shell", inline: <<-SHELL
         apt-get update
         apt-get install -y nginx nodejs npm
         npm install -g http-server
-        su - vagrant -c "wget -q -O /home/vagrant/index.hml https://gist.githubusercontent.com/chrisvfritz/bc010e6ed25b802da7eb/raw/18eaa48addae7e3021f6bcea03b7a6557e3f0132/index.html"
+        su - vagrant -c "wget -q -O /home/vagrant/index.html https://gist.githubusercontent.com/chrisvfritz/bc010e6ed25b802da7eb/raw/18eaa48addae7e3021f6bcea03b7a6557e3f0132/index.html"
     SHELL
 
     config.vm.post_up_message = "Run 'python -m SimpleHTTPServer 8080' for the second webserver"
