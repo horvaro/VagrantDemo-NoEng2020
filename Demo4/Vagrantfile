@@ -3,7 +3,7 @@
 
 $installer = <<SCRIPT
     sudo yum install -y epel-release
-    sudo yum install -y nginx
+    sudo yum install -y nginx lynx
     sudo systemctl start nginx
 SCRIPT
 

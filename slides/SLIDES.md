@@ -192,6 +192,7 @@ So wie auch das korrekte Einhängen von lokalen Ordnern.
 
 <!-- Vagrant up dauert lange -->
 <!-- Anschliessend 'vagrant ssh vm1' -->
+<!-- Mit curl und lynx server gegenseitig aufrufen -->
 
 ```
 $installer = <<SCRIPT
