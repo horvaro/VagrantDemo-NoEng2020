@@ -108,6 +108,116 @@ end
   - Verhalten von Ziel-OS ausprobieren
 
 ---
+# 4. Demo
+
+1. Einfaches Vagrantfile
+2. Startup Befehle (Installation von Software, Laden von Daten)
+3. Zugänge einrichten (Shared Folder, Port-Weiterleitung)
+4. Multi-Maschinen Setup (Cluster, etc.)
+5. Windows Server Beispiel
+
+---
+# 4. Demo 1
+
+Einfaches Vagrantfile
+
+```
+Vagrant.configure("2") do |config|
+    config.vm.box = "centos/7"
+
+    config.vm.provider "virtualbox" do |vb|
+        vb.memory = 3072
+        vb.cpus = 1
+    end
+
+    config.vm.provider "hyperv" do |hv|
+        hv.memory = 3072
+        hv.cpus = 1
+    end
+end
+```
+
+
+---
+# 4. Demo 2
+
+Startup Befehle (Installation von Software, Laden von Daten)
+
+```
+Vagrant.configure("2") do |config|
+    config.vm.box = "hashicorp/bionic64"
+
+    config.vm.provider "virtualbox" do |vb|
+        vb.memory = "3072"
+    [...]
+
+    config.vm.provision "shell", inline: <<-SHELL
+        apt-get update
+        apt-get install -y nmap speedtest-cli maven git default-jdk
+        su - vagrant -c "git clone https://github.com/javaparser/javaparser-maven-sample.git"
+    SHELL
+end
+```
+
+
+---
+# 4. Demo 3
+
+Zugänge einrichten (Shared Folder, Port-Weiterleitung)
+
+```
+Vagrant.configure("2") do |config|
+    [...]
+
+    config.vm.network "forwarded_port", guest: 80, host: 8080
+    config.vm.network "forwarded_port", guest: 8080, host: 9999, host_ip: "127.0.0.1
+    config.vm.synced_folder "C:\\_temp", "/vagrant_data"
+
+    [...]
+end
+```
+
+Port-Weiterleitung funktioniert in Hyper-V aktuell nicht.
+(Alternativ kann die interne IP der VM genutzt werden.)
+
+
+---
+# 4. Demo 4
+```
+Vagrant.configure("2") do |config|
+    config.vm.box = "hashicorp/bionic64"
+
+    config.vm.provider "virtualbox" do |vb|
+        vb.memory = "3072"
+    [...]
+
+end
+```
+
+
+---
+# 4. Demo 5
+
+Windows Server Beispiel
+
+```
+Vagrant.configure("2") do |config|
+    config.vm.box = "gusztavvargadr/windows-server"
+
+    [...]
+end    
+```
+
+Anschliessend kann mit den folgenden Befehlen gearbeitet werden
+- `vagrant rdp`
+- `vagrant powershell`
+
+
+---
+# 5. Fragerunde
+![bg contain](https://www.kindpng.com/picc/m/769-7697703_question-mark-clipart-mar-funny-cartoon-office-worker.png)
+
+---
 ![](Noser_Engineering_Logo.png)
 ![bg](Noser_Endcard.png)
 
