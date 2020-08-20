@@ -3,8 +3,7 @@
 
 $installer = <<SCRIPT
     sudo yum install -y epel-release
-    sudo yum install -y nginx lynx
-    sudo systemctl start nginx
+    sudo yum install -y nginx
 SCRIPT
 
 Vagrant.configure("2") do |config|
@@ -25,7 +24,7 @@ Vagrant.configure("2") do |config|
             hv.maxmemory = 1024
             hv.cpus = 1
         end
-        config.vm.provision "shell", inline: <<-SHELL
+        vm1.vm.provision "shell", inline: <<-SHELL
             yum install -y nmap
         SHELL
     end 
@@ -43,6 +42,9 @@ Vagrant.configure("2") do |config|
             hv.maxmemory = 1024
             hv.cpus = 1
         end
+        vm2.vm.provision "shell", inline: <<-SHELL
+            yum install -y lynx
+        SHELL
     end 
 
     config.vm.define "vm3" do |vm3|
