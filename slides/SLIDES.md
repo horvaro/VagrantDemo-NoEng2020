@@ -48,7 +48,7 @@ https://github.com/horvaro/VagrantDemo-NoEng2020
   - Softwarepakete
   - etc.
 - Cross-Platform
-  - Hypervisor
+  - Hypervisor/Provider
     - Virtualbox, Hyper-V, VMware, ...
   - Betriebssystem
     - Mac, Linux, Windows
@@ -119,6 +119,9 @@ end
 ---
 # 4. Demo 1
 
+<!-- Andere Provider erwähnen: VMware, Google GCE (Plugin), OpenStack ... -->
+<!-- https://vagrant-lists.github.io/plugins.html -->
+
 Einfaches Vagrantfile
 
 ```
@@ -188,7 +191,7 @@ So wie auch das korrekte Einhängen von lokalen Ordnern.
 
 
 ---
-# 4. Demo 4
+# 4. Demo 4: Multi-Maschinen Setup
 
 <!-- Vagrant up dauert lange -->
 <!-- Anschliessend 'vagrant ssh vm1' -->
@@ -196,9 +199,7 @@ So wie auch das korrekte Einhängen von lokalen Ordnern.
 
 ```
 $installer = <<SCRIPT
-    sudo yum install -y epel-release
-    sudo yum install -y nginx
-    sudo systemctl start nginx
+    sudo yum install -y epel-release; sudo yum install -y nginx; sudo systemctl start nginx
 SCRIPT
 
 Vagrant.configure("2") do |config|
