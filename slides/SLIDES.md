@@ -243,6 +243,21 @@ Anschliessend kann mit den folgenden Befehlen gearbeitet werden
 
 
 ---
+# Weitere interessante Befehle
+
+- `vagrant snapshot`
+  - `vagrant save/restore`: Erstellen und Wiederherstellen von Snapshots
+  - `vagrant push/pop`: Einfachere Variante für save/restore
+  - https://www.vagrantup.com/docs/cli/snapshot 
+- `vagrant package`
+  - Neue Vagrant Box erstellen mit dem aktuellen Status der VM
+  - https://www.vagrantup.com/docs/cli/package
+- `vagrant suspend/resume`
+  - Hypervisor-Funktion von Suspend und Resume nutzen
+  - https://www.vagrantup.com/docs/cli/suspend
+
+
+---
 # 5. Fragerunde
 ![bg contain](https://www.kindpng.com/picc/m/769-7697703_question-mark-clipart-mar-funny-cartoon-office-worker.png)
 
